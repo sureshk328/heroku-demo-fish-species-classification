@@ -14,13 +14,34 @@ def predict():
     '''
     For rendering results on HTML GUI
     '''
-    int_features = [int(x) for x in request.form.values()]
-    final_features = [np.array(int_features)]
-    prediction = model.predict(final_features)
+    to_predict_list = request.form.to_dict()
+    print(list(to_predict_list.values()))
+    to_predict_list = list(to_predict_list.values())
+    to_predict_list = list(map(int, to_predict_list))
+    final_features = [np.array(to_predict_list)]
+    #prediction = model.predict(final_features)
+    #{'Bream':0, 'Roach':1, 'Whitefish':2, 'Parkki':3, 'Perch':4, 'Pike':5, 'Smelt':6}
+    result = model.predict(final_features)
+    if int(result)== 0:
+        prediction ='Bream'
+    elif int(result)==1:
+        prediction ='Roach'
+    elif int(result)==2:
+        prediction ='Whitefish'
+    elif int(result)==3:
+        prediction ='Parkki'
+    elif int(result)==4:
+        prediction ='Perch'
+    elif int(result)==5:
+        prediction ='Pike'
+    elif int(result)==6:
+        prediction ='Smelt'
+    else:
+        prediction="Unable to predict"
 
-    output = round(prediction[0], 2)
 
-    return render_template('index.html', prediction_text='Predicted Fish Species {}'.format(output))
+
+    return render_template('index.html', prediction_text='Predicted Fish Species {}'.format(prediction))
 
 
 if __name__ == "__main__":
