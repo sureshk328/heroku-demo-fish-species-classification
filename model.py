@@ -3,6 +3,10 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import pickle
 from sklearn.linear_model import LogisticRegression
+try:
+    from collections.abc import Mapping
+except ImportError:
+    from collections import Mapping
 
 df=pd.read_csv('Fish.csv')
 
